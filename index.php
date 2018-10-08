@@ -1,42 +1,56 @@
-<h2>Data Buku</h2>
-<?php include 'koneksi.php' ?>
-<form>
-  <a href="add.php?id=$id">+add</a>
-  <table border="1">
-    <tr>
-    <th width="50">No</th>
-    <th width="50">kode Buku</th>
-    <th width="50">nama Buku</th>
-    <th width="50">kategori</th>
-    <th width="50">jumlah</th>
-    <th width="50">Rak</th>
-    <th width="50"></th>
-  </tr>
+<?php
+require("koneksi.php");
+ ?>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>	Data kontak</title>
+</head>
+<body>
+	<h3><b>Data Kontak</b></h3>
+	<br>
+	<a href="form_input.php">Tambah Data</a>
+	<br>
+	<table border='1' cellpadding="5" cellspacing="0">
+			<tr>
+				<th>Nis</th>
+				<th>Nama</th>
+				<th>jk</th>
+				<th>Alamat</th>
+        <th>tgl_lahir</th>
+				<th></th>
+			</tr>
+		<?php
+			$d = 0;
 
-    <?php
-      $sql= "SELECT *FROM perpus";
-      $result =mysqli_query($con,$sql);
-      $num = 1;
+			$query = $config->query("select * from siswa");
+			while($siswa = $query->fetch_array()) {
 
-      if(mysqli_num_rows($result)>0){
-        while ($row = mysqli_fetch_assoc($result)) {
-      ?>
-      <tr>
-        <td><?php echo $num;?></td>
-        <td><?php echo $row["kdbuku"]; ?></td>
-        <td><?php echo $row["namabuku"]; ?></td>
-        <td><?php echo $row["kategori"]; ?></td>
-        <td><?php echo $row["qty"]; ?></td>
-        <td><?php echo $row["rak"]; ?></td>
-        <td><a href="form_edit.php?id=<?php echo $row['kdbuku']; ?>"> <input type="button" name="ubah" value="ubah"></a>
-        <a href="deletebuku.php?id=<?php echo $row['kdbuku']; ?>"> <input type="button" name="hapus" value="hapus"></a>
-        </td>
-      </tr>
-      <?php
-    
-    $num++;
-}
-}
-        ?>
-  </table>
-</form>
+					 $d++;
+
+					 $nis = $siswa['nis'];
+					 $nama = $siswa['nama'];
+					 $jk = $siswa['jk'];
+					 $alamat = $siswa['alamat'];
+           $tgl = $siswa['tgl_lahir'];
+
+					 echo "
+					 <tr>
+					 	<td align='center'>$d</td>
+            <td>$nis</td>
+					 	<td>$nama</td>
+					 	<td>$jk</td>
+					 	<td>$alamat</td>
+            <td>$tgl</td>
+					 	<td>
+					 		<a href='form_edit.php?nis=$siswa'>Edit</a>
+					 		&bull;
+					 		<a href='proses_hapus.php?nis=$siswa'>Hapus</a>
+					    </td>
+					  </tr>
+					 ";
+			 	}
+		 ?>
+	</table>
+</body>
+</html>
